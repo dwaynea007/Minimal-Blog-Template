@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Minimal Blog Template</title>
+  <meta name="description" content="A clean, responsive blog template you can use for your portfolio." />
+  <style>
+    :root{
+      --bg: #0b0c0f;
+      --panel: #11131a;
+      --text: #ecedf1;
+      --muted: #b6b9c3;
+      --brand: #6ea8fe;
+      --accent: #7ad9c6;
+      --border: #1f2330;
+      --card: #0f1117;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 16px;
+    }
+    [data-theme="light"]{
+      --bg: #f7f8fb;
+      --panel: #ffffff;
+      --text: #0e1222;
+      --muted: #4c5566;
+      --brand: #1e66f5;
+      --accent: #0bb69d;
+      --border: #e6e8ef;
+      --card: #ffffff;
+      --shadow: 0 10px 30px rgba(2, 14, 42, .08);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      background: var(--bg);
+      color: var(--text);
+      line-height:1.6;
+    }
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block;border-radius:12px}
+
+    /* Layout */
+    .shell{max-width:1100px;margin:0 auto;padding:24px}
+
+    /* Topbar */
+    .topbar{
+      position: sticky; top:0; z-index: 20;
+      backdrop-filter: saturate(140%) blur(10px);
+      background: color-mix(in oklab, var(--panel) 75%, transparent);
+      border-bottom:1px solid var(--border);
+    }
+    .topbar-inner{display:flex;gap:14px;align-items:center;justify-content:space-between;padding:14px 24px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:700}
+    .brand .logo{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--brand),var(--accent));box-shadow:var(--shadow)}
+    .nav{display:flex;gap:18px;align-items:center}
+    .nav a{padding:8px 10px;border-radius:10px;color:var(--muted)}
+    .nav a.active,.nav a:hover{color:var(--text);background:color-mix(in oklab,var(--brand) 16%, transparent)}
+    .actions{display:flex;gap:10px;align-items:center}
+    .search{display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--border);border-radius:12px;background:var(--card)}
+    .search input{border:none;outline:none;background:transparent;color:var(--text);min-width:180px}
+    .toggle{border:1px solid var(--border);background:var(--card);border-radius:12px;padding:8px 10px;cursor:pointer}
+
+    /* Hero */
+    .hero{padding:38px 0 12px}
+    .hero .kicker{letter-spacing:.14em;color:var(--muted);text-transform:uppercase;font-size:12px;font-weight:700}
+    .hero h1{margin:.4rem 0 1rem;font-size:clamp(28px,3.2vw,44px);line-height:1.15}
+    .hero p{color:var(--muted);max-width:70ch;margin:0}
+
+    /* Grid */
+    .grid{
+      display:grid;gap:22px;grid-template-columns:2fr 1fr;align-items:start;margin-top:24px
+    }
+    @media (max-width: 900px){.grid{grid-template-columns:1fr}}
+
+    /* Cards */
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      overflow:hidden;
+      box-shadow: var(--shadow);
+    }
+    .post{display:grid;grid-template-columns:180px 1fr;gap:18px;padding:18px}
+    @media (max-width:700px){.post{grid-template-columns:1fr}}
+    .post h3{margin:.2rem 0 .4rem;font-size:1.15rem}
+    .meta{display:flex;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:.9rem}
+    .tag{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;border:1px solid var(--border);background:color-mix(in oklab,var(--brand) 10%, transparent);font-size:.8rem}
+    .readmore{margin-top:10px;display:inline-flex;gap:8px;align-items:center;color:var(--brand)}
+
+    /* Sidebar */
+    aside{display:grid;gap:18px;position:sticky;top:76px}
+    .sidebar-card{padding:18px}
+    .list{display:grid;gap:14px}
+    .mini{display:grid;gap:8px}
+    .mini .meta{font-size:.85rem}
+
+    /* Footer */
+    footer{padding:36px 0;color:var(--muted);}
+    .footer-inner{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;border-top:1px solid var(--border);padding-top:18px}
+
+    /* Utility */
+    .row{display:flex;gap:10px;flex-wrap:wrap}
+    .spacer{height:2px;background:var(--border);margin:4px 0 12px;border-radius:2px}
+    .pill{padding:4px 10px;border-radius:999px;border:1px solid var(--border);color:var(--muted)}
+  </style>
+</head>
+<body>
+  <!-- Top Navigation -->
+  <header class="topbar">
+    <div class="topbar-inner shell">
+      <a href="#" class="brand" aria-label="Blog home">
+        <span class="logo" aria-hidden="true"></span>
+        <span>Minimal Blog</span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a class="active" href="#">Home</a>
+        <a href="#">Categories</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+      </nav>
+      <div class="actions">
+        <label class="search" aria-label="Search posts">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="1.5"/></svg>
+          <input placeholder="Search…" inputmode="search" />
+        </label>
+        <button class="toggle" id="themeToggle" title="Toggle theme">🌗</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero shell">
+    <div class="kicker">Featured</div>
+    <h1>Clean, Responsive Blog Template</h1>
+    <p>A polished layout with a hero section, post cards, categories, and a sticky sidebar. Built with semantic HTML and modern CSS. No frameworks required.</p>
+  </section>
+
+  <!-- Content Grid -->
+  <main class="shell grid" id="content">
+    <!-- Posts column -->
+    <section aria-label="Latest posts" style="display:grid;gap:18px">
+      <!-- Post 1 -->
+      <article class="card post">
+        <img src="https://images.unsplash.com/photo-1487014679447-9f8336841d58?q=80&w=1200&auto=format&fit=crop" alt="Laptop on desk with code editor open" />
+        <div>
+          <div class="row">
+            <span class="tag">HTML</span>
+            <span class="tag">CSS</span>
+            <span class="tag">Accessibility</span>
+          </div>
+          <h3><a href="#">How I Built This Blog Template</a></h3>
+          <p>From semantic tags to responsive grids—here's a breakdown of the structure and decisions behind this layout.</p>
+          <div class="meta"> <span>Aug 26, 2025</span> • <span>6 min read</span> • <span>by Dwayne Asamoah</span></div>
+          <a class="readmore" href="#">Read more
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="1.5"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Post 2 -->
+      <article class="card post">
+        <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1200&auto=format&fit=crop" alt="Closeup of developer typing on a keyboard" />
+        <div>
+          <div class="row">
+            <span class="tag">JavaScript</span>
+            <span class="tag">Performance</span>
+          </div>
+          <h3><a href="#">10 Micro-Interactions that Make UIs Feel Premium</a></h3>
+          <p>Subtle motion, hover states, and tiny details that elevate your interface without overwhelming the user.</p>
+          <div class="meta"> <span>Aug 18, 2025</span> • <span>4 min read</span> • <span>by Dwayne Asamoah</span></div>
+          <a class="readmore" href="#">Read more
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="1.5"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Post 3 -->
+      <article class="card post">
+        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop" alt="Abstract code on a screen with neon colors" />
+        <div>
+          <div class="row">
+            <span class="tag">Design</span>
+            <span class="tag">UX</span>
+          </div>
+          <h3><a href="#">Grid Systems: From Print to Web</a></h3>
+          <p>Learn how classic grid principles translate to responsive web design and why they still matter.</p>
+          <div class="meta"> <span>Aug 3, 2025</span> • <span>5 min read</span> • <span>by Dwayne Asamoah</span></div>
+          <a class="readmore" href="#">Read more
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="1.5"/></svg>
+          </a>
+        </div>
+      </article>
+    </section>
+
+    <!-- Sidebar -->
+    <aside aria-label="Sidebar">
+      <section class="card sidebar-card">
+        <h4 style="margin:0 0 8px">About this blog</h4>
+        <p style="margin:0;color:var(--muted)">A minimal, recruiter-friendly template. Clean typography, accessible contrasts, responsive out of the box. Copy it into your portfolio and customize.</p>
+      </section>
+
+      <section class="card sidebar-card">
+        <h4 style="margin:0 0 8px">Categories</h4>
+        <div class="row">
+          <a class="pill" href="#">All</a>
+          <a class="pill" href="#">HTML</a>
+          <a class="pill" href="#">CSS</a>
+          <a class="pill" href="#">JavaScript</a>
+          <a class="pill" href="#">Design</a>
+        </div>
+      </section>
+
+      <section class="card sidebar-card">
+        <h4 style="margin:0 0 8px">Popular posts</h4>
+        <div class="list">
+          <div class="mini">
+            <a href="#"><strong>Accessible Color Systems</strong></a>
+            <div class="meta">Apr 29 • 7 min read</div>
+          </div>
+          <div class="mini">
+            <a href="#"><strong>CSS Grid vs Flexbox</strong></a>
+            <div class="meta">Mar 12 • 5 min read</div>
+          </div>
+          <div class="mini">
+            <a href="#"><strong>Designing for Dark Mode</strong></a>
+            <div class="meta">Jan 8 • 6 min read</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card sidebar-card">
+        <h4 style="margin:0 0 8px">Newsletter</h4>
+        <p style="margin:0 0 10px;color:var(--muted)">Get new posts in your inbox. No spam.</p>
+        <form class="row" onsubmit="event.preventDefault(); alert('Subscribed! (demo)')">
+          <input aria-label="Email" type="email" placeholder="you@example.com" required style="flex:1;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:var(--card);color:var(--text)" />
+          <button style="padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:linear-gradient(135deg,var(--brand),var(--accent));color:#fff;cursor:pointer">Subscribe</button>
+        </form>
+      </section>
+    </aside>
+  </main>
+
+  <footer class="shell">
+    <div class="footer-inner">
+      <div>© <span id="year"></span> Minimal Blog. All rights reserved.</div>
+      <div class="row">
+        <a class="pill" href="#">Privacy</a>
+        <a class="pill" href="#">Terms</a>
+        <a class="pill" href="#">RSS</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Theme toggle (persists to localStorage)
+    const root = document.documentElement;
+    const btn = document.getElementById('themeToggle');
+    const saved = localStorage.getItem('theme');
+    if(saved){
+      root.setAttribute('data-theme', saved);
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches){
+      root.setAttribute('data-theme','light');
+    }
+    btn.addEventListener('click', ()=>{
+      const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+
+    // Year footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
